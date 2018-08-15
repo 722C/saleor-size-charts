@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if perms.size_charts.view %}
+<li class="side-nav-section">
+  <p>
+    {% trans "Size Charts" context "Dashboard size charts list" %}
+  </p>
+  <ul>
+      {% if perms.size_charts.vew %}
+        <li class="{% block menu_size_charts_class %}{% endblock %}">
+          <a href="{% url 'size-chart-dashboard-list' %}">
+            {% trans "Charts" context "Dashboard size charts list" %}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+</li>
+{% endif %}
+

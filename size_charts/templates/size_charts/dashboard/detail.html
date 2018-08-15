@@ -1,0 +1,101 @@
+{% extends "dashboard/base.html" %}
+{% load materializecss %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}
+  {% if size_chart.name %}
+    {{ size_chart }}
+  {% else %}
+    {% trans "Add new size chart" context "Dashboard add size chart" %}
+  {% endif %}
+  - {% trans "Size chart" context "Dashboard size chart" %} - {{ block.super }}
+{% endblock %}
+
+{% block body_class %}body-customers{% endblock %}
+
+{% block menu_size_charts_class %}active{% endblock %}
+
+{% block header_menu %}
+  {% url "size-chart-dashboard-list" as url %}
+  {% include "dashboard/includes/_back_link.html" with url=url %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <ul class="breadcrumbs breadcrumbs--history">
+    <li>
+      <a href="{% url "size-chart-dashboard-list" %}">
+        {% trans "Size Charts" context "Dashboard size charts list" %}
+      </a>
+    </li>
+    <li class="back-mobile">
+      <a href="{% url "size-chart-dashboard-list" %}">
+        <svg data-src="{% static "dashboard/images/arrow-left.svg" %}" fill="#fff" width="20px" height="20px" />
+      </a>
+    </li>
+    <li>
+      <span class="breadcrumbs--elipsed-item">
+        {% if size_chart.pk %}{{ size_chart }}{% else %}{% trans "Add new size chart" context "Dashboard add new size chart" %}{% endif %}
+      </span>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block header_extra %}
+  {% if size_chart.pk %}
+    <a class="dropdown-button right" href="#" data-activates="context-menu" data-constrainwidth="false">
+      <svg data-src="{% static "dashboard/images/more-vert.svg" %}" height="24" width="24" />
+    </a>
+    <ul id="context-menu" class="dropdown-content">
+        {% if perms.size_charts.edit %}
+      <li>
+        <a href="#base-modal" data-href="{% url 'size-chart-dashboard-delete' pk=size_chart.pk %}"
+        class="modal-trigger-custom">
+          {% trans 'Remove size chart' context 'Size chart form action' %}
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <div class="row">
+    <div class="col s12 l8">
+      {% if form %}
+        <form method="post" class="card">
+          <div class="card">
+            <div class="data-table-header">
+              <h5 class="data-table-title">
+                Size Chart
+              </h5>
+            </div>
+            <div class="card-content">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col s12">
+                  {{ form|materializecss }}
+                </div>
+              </div>
+            </div>
+            {% if perms.size_charts.edit %}
+            <div class="card-action right-align">
+              <a href="{% url 'size-chart-dashboard-list' %}" class="btn-flat waves-effect">
+                {% trans "Cancel" context "Dashboard cancel action" %}
+              </a>
+              <button type="submit" class="btn waves-effect">
+                {% if size_chart.pk %}
+                  {% trans 'Update' context 'Dashboard update action' %}
+                {% else %}
+                  {% trans 'Add' context 'Dashboard add action' %}
+                {% endif %}
+              </button>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

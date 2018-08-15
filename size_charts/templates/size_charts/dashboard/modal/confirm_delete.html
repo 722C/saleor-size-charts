@@ -1,0 +1,28 @@
+{% extends "dashboard/base_modal.html" %}
+
+{% load i18n %}
+
+{% block form_class %}{% endblock %}
+
+{% block action_url %}
+{% url 'size-chart-dashboard-delete' pk=size_chart.pk %}
+{% endblock %}
+
+{% block title %}
+{% blocktrans trimmed context "Modal remove size chart text" %}
+  Remove size chart <strong>{{ size_chart }}</strong>?
+{% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+  <div class="col s12">
+  {% blocktrans trimmed context "Modal remove size chart text" %}
+    Are you sure you want to remove size chart {{ size_chart }}?
+    <br> The associated product types, categories, and products will no longer have this size chart.
+  {% endblocktrans %}
+  </div>
+{% endblock content %}
+
+{% block primary_action %}
+{% trans "Remove" context "Dashboard delete action" %}
+{% endblock %}
