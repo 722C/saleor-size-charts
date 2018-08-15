@@ -11,4 +11,4 @@ class SizeChartForm(forms.ModelForm):
     class Meta:
         model = SizeChart
         verbose_name_plural = 'size charts'
-        exlude = []
+        exclude = []

@@ -1,6 +1,5 @@
 from django.conf.urls import url
 
-from . import storefront_views
 from .dashboard_views import views as dashboard_views
 
 urlpatterns = [
