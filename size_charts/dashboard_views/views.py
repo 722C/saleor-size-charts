@@ -34,7 +34,7 @@ def size_chart_list(request):
 @permission_required('size_charts.edit')
 def size_chart_create(request):
     size_chart = SizeChart()
-    form = SizeChartForm(request.POST or None)
+    form = SizeChartForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         msg = pgettext_lazy('Dashboard message', 'Created size chart')
@@ -49,7 +49,7 @@ def size_chart_create(request):
 def size_chart_details(request, pk):
     size_chart = SizeChart.objects.get(pk=pk)
     form = SizeChartForm(
-        request.POST or None, instance=size_chart)
+        request.POST or None, request.FILES or None, instance=size_chart)
     if form.is_valid():
         form.save()
         msg = pgettext_lazy(
