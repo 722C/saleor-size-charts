@@ -6,7 +6,7 @@
     {% trans "Size Charts" context "Dashboard size charts list" %}
   </p>
   <ul>
-      {% if perms.size_charts.vew %}
+      {% if perms.size_charts.view %}
         <li class="{% block menu_size_charts_class %}{% endblock %}">
           <a href="{% url 'size-chart-dashboard-list' %}">
             {% trans "Charts" context "Dashboard size charts list" %}
