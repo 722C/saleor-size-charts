@@ -18,11 +18,14 @@ class SizeChart(models.Model):
     name = models.CharField(max_length=255)
     chart = VersatileImageField(upload_to='size-charts')
     product_type = models.ManyToManyField(
-        'product.ProductType', related_name='size_chart')
+        'product.ProductType', related_name='size_chart',
+        blank=True)
     category = models.ManyToManyField(
-        'product.Category', related_name='size_chart')
+        'product.Category', related_name='size_chart',
+        blank=True)
     products = models.ManyToManyField(
-        'product.Product', related_name='size_chart')
+        'product.Product', related_name='size_chart',
+        blank=True)
     added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
