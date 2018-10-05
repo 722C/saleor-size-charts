@@ -8,6 +8,7 @@ from ..models import SizeChart
 from django.urls import reverse_lazy
 from saleor.dashboard.forms import AjaxSelect2MultipleChoiceField
 
+
 class SizeChartForm(forms.ModelForm):
     products = AjaxSelect2MultipleChoiceField(
         queryset=Product.objects.all(),
@@ -17,3 +18,8 @@ class SizeChartForm(forms.ModelForm):
         model = SizeChart
         verbose_name_plural = 'size charts'
         exclude = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['products'].set_initial(self.instance.products.all())
