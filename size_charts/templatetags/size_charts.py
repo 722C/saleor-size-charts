@@ -9,6 +9,13 @@ def size_charts_side_nav(context):
     return context
 
 
+@register.simple_tag
+def get_size_chart(product):
+    return (product.size_chart.first() or
+            product.category.size_chart.first() or
+            product.product_type.size_chart.first())
+
+
 @register.inclusion_tag('size_charts/image.html')
 def size_chart(product):
     size_chart = (product.size_chart.first() or
