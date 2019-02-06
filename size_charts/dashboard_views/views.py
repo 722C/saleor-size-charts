@@ -21,7 +21,7 @@ def size_chart_list(request):
     size_chart_filter = SizeChartFilter(
         request.GET, queryset=size_charts)
     size_charts = get_paginator_items(
-        size_charts, settings.DASHBOARD_PAGINATE_BY, request.GET.get('page'))
+        size_chart_filter.qs, settings.DASHBOARD_PAGINATE_BY, request.GET.get('page'))
     # Call this so that cleaned_data exists on the filter_set
     size_chart_filter.form.is_valid()
     ctx = {
