@@ -1,5 +1,8 @@
-from django.db import models
+from imagekit import register as ik_register
+from imagekit.models import ImageSpecField
+from imagekit.specs.sourcegroups import ImageFieldSourceGroup
 
+from django.db import models
 from django.utils.translation import pgettext_lazy
 
 from versatileimagefield.fields import VersatileImageField
@@ -17,6 +20,12 @@ MODELS_PERMISSIONS += [
 class SizeChart(models.Model):
     name = models.CharField(max_length=255)
     chart = VersatileImageField(upload_to='size-charts')
+    chart_webp = ImageSpecField(source='chart',
+            format="WEBP",
+            options={'quality': 60, 'lossless': True}) # Use lossless because text is involved
+    chart_png = ImageSpecField(source='chart',
+            format="PNG",
+            options={'optimize': True})
     product_type = models.ManyToManyField(
         'product.ProductType', related_name='size_chart',
         blank=True)
@@ -40,3 +49,7 @@ class SizeChart(models.Model):
 
     def __str__(self):
         return self.name
+
+
+ik_register.source_group('products:chart', ImageFieldSourceGroup(SizeChart, 'chart_webp'))
+ik_register.source_group('products:chart', ImageFieldSourceGroup(SizeChart, 'chart_png'))
