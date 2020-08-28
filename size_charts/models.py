@@ -51,5 +51,3 @@ class SizeChart(models.Model):
         return self.name
 
 
-ik_register.source_group('products:chart', ImageFieldSourceGroup(SizeChart, 'chart_webp'))
-ik_register.source_group('products:chart', ImageFieldSourceGroup(SizeChart, 'chart_png'))
